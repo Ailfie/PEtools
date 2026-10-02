@@ -1,0 +1,16 @@
+{
+  "hotkey": "ctrl+shift+v",
+  "copy_hotkey": "ctrl+shift+c",
+  "enable_copy_plain": false,
+  "latex_to_text": "auto",
+  "paste_delay_ms": 30,
+  "trim_whitespace": false,
+  "debug": false,
+  "history_enabled": true,
+  "history_prefix": "alt+shift",
+  "history_days": 7,
+  "history_max_entries": 200,
+  "history_max_text_kb": 512,
+  "history_max_image_mb": 10,
+  "history_max_total_mb": 200
+}

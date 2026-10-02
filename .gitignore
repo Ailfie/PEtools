@@ -1,0 +1,26 @@
+# ---- 构建产物 ----
+build/
+dist/
+*.spec
+
+# 打包出的可执行文件（体积大，请从 GitHub Releases 下载）
+PlainPaste.exe
+
+# ---- 运行期生成的数据（含个人剪贴板内容，绝不入库）----
+config.json
+history/
+plainpaste.log
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+~$*
