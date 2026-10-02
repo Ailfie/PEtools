@@ -8,6 +8,10 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+# Windows runner 的默认 stdout 编码是 cp1252，打印中文/希腊字母会 UnicodeEncodeError
+env:
+  PYTHONUTF8: '1'
+
 permissions:
   contents: write
 

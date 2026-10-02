@@ -498,7 +498,14 @@ def convert(text, mode="auto"):
 
 
 if __name__ == "__main__":
+    import sys
     import unicodedata
+
+    # Windows 控制台默认编码可能是 cp1252/cp936，打印中文与 α、σ² 会直接崩溃
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
     samples = [
         (r"$\frac{a}{b}$", "a/b"),

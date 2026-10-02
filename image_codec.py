@@ -318,7 +318,14 @@ def put_to_clipboard(width, height, bgra_topdown):
 
 if __name__ == "__main__":
     import os
+    import sys
     import tempfile
+
+    # Windows 控制台默认编码可能是 cp1252/cp936，打印中文会直接崩溃
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
     print("=" * 66)
     print("image_codec 自测：PNG 编解码往返")

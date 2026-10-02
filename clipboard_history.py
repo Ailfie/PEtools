@@ -301,8 +301,15 @@ class HistoryManager(object):
 
 
 if __name__ == "__main__":
-    import tempfile
     import shutil
+    import sys
+    import tempfile
+
+    # Windows 控制台默认编码可能是 cp1252/cp936，打印中文会直接崩溃
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
     print("=" * 66)
     print("clipboard_history 自测")
