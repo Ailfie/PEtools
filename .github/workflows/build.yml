@@ -1,0 +1,70 @@
+name: build
+
+on:
+  push:
+    branches: [main, master]
+    tags: ['v*']
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  # ---------------------------------------------------------------
+  # 1) 模块自测：三个核心模块都内置自测用例，改代码后必须保持通过
+  # ---------------------------------------------------------------
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: LaTeX 转换自测
+        run: python latex2text.py
+
+      - name: 剪贴板历史自测
+        run: python clipboard_history.py
+
+      # 该模块末尾会探测屏幕尺寸与剪贴板，CI 无交互桌面会话时可能失败，
+      # 故不阻塞构建；本地开发请务必让它通过。
+      - name: PNG 编解码自测
+        continue-on-error: true
+        run: python image_codec.py
+
+  # ---------------------------------------------------------------
+  # 2) 打标签时构建 exe 并发布到 Release
+  # ---------------------------------------------------------------
+  release:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装 PyInstaller
+        run: python -m pip install --upgrade pyinstaller
+
+      - name: 构建单文件 exe
+        run: >
+          python -m PyInstaller
+          --onefile --noconsole
+          --name PlainPaste
+          --icon plainpaste.ico
+          --add-data "plainpaste.ico;."
+          --clean --noconfirm
+          plain_paste.py
+
+      - name: 上传 Release 附件
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/PlainPaste.exe
+          generate_release_notes: true
