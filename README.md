@@ -1,24 +1,38 @@
 # Easy Copy Paste（PlainPaste）
 
-> Windows 纯文本粘贴 + LaTeX 公式自动转普通文本 + 剪贴板历史
-> **免安装、零第三方依赖、无需管理员权限**
+> **把 AI 回答里的公式，直接粘进 PPT。**
 
-**English** — A tiny Windows tray utility that: (1) pastes **plain text only** — fonts, colors, hyperlinks and table styles are stripped while line breaks are preserved; (2) automatically converts **LaTeX** copied from AI answers (`\frac{a}{b}`, `$x^2$`, `\alpha`) into readable Unicode (`a/b`, `x²`, `α`); (3) keeps a **clipboard history** you can re-paste with `Alt+Shift+1~0`. Written in pure Python standard library — no PIL, no third-party packages, no admin rights.
+从 ChatGPT / Gemini / DeepSeek 复制带公式的技术内容，粘贴时自动转成可读文本：
+
+```
+复制到：  $$\sigma^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^2$$
+粘贴出：  σ² = 1/n∑ᵢ₌₁ⁿ(xᵢ - x̄)²
+```
+
+同时剥离一切格式，只保留纯文本与换行 —— 字体、颜色、超链接、表格样式都不会粘过来。
+
+Windows 托盘小工具 · **免安装** · **零第三方依赖** · **无需管理员权限**
+
+**English** — A Windows tray utility that makes AI answers paste-ready. It converts **LaTeX** copied from ChatGPT / Gemini / DeepSeek into readable Unicode (`\frac{a}{b}` → `a/b`, `$x^2$` → `x²`, `\alpha` → `α`), strips all formatting so only plain text and line breaks survive, and keeps a re-pasteable clipboard history (`Alt+Shift+1~0`). Pure Python standard library — no PIL, no third-party packages, no admin rights.
 
 ---
 
-解决的核心问题：
+## 它解决什么
 
-1. 从网页、微信、PDF、其他文档复制内容后，粘贴到 Word / PPT 时总是带上字体、字号、
-   颜色、超链接、表格样式等一堆格式，排版全乱。
-2. 从 AI（ChatGPT / Gemini / DeepSeek 等）复制带公式的回答时，粘出来的是
-   `\frac{a}{b}`、`$x^2$`、`\alpha` 这种 LaTeX 源码，根本没法看。
+**主要场景：AI 回答 → Word / PPT**
 
-本工具让**任何程序**里都能"只粘贴纯文本和换行"，并**自动把 LaTeX 公式转成普通文本与符号**。
+从 AI 复制的技术内容，公式全是 LaTeX 源码，粘进文档就是一堆 `\frac{a}{b}`、`$x^2$`、
+`\int_0^\infty`，完全不能看。本工具在粘贴的瞬间把它转成普通文本与 Unicode 符号
+（完整对照表见下方「LaTeX 公式自动转换」）。
+
+**附带解决：从任何地方复制，都不带格式**
+
+从网页、微信、PDF、其他文档复制的内容粘到 Word / PPT 时，总会带上字体、字号、颜色、
+超链接、表格样式，排版全乱。本工具让**任何程序**里都能"只粘贴纯文本和换行"。
 
 ---
 
-## 一、两种方案，建议先试方案 A
+## 一、先确认：也许你不需要这个工具
 
 | | 方案 A：Office 自带设置 | 方案 B：PlainPaste 工具 |
 |---|---|---|
